@@ -1,3 +1,4 @@
+
 name: Deploy to GitHub Pages
 
 on:
@@ -5,14 +6,24 @@ on:
     branches: [main]  # Change this to your default branch
   pull_request:
     branches: [main]  # Change this to your default branch
+  # Allow manual deployment
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
+    
     
     steps:
       - name: Checkout
@@ -28,7 +39,9 @@ jobs:
         run: npm ci
       
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          touch ./out/.nojekyll
       
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -41,13 +54,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-
-  # Add a job to ensure the deployment was successful
-  report-status:
-    needs: build-and-deploy
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - name: Deployment Status
-        if: steps.deploy.outcome != 'success'
-        run: exit 1
