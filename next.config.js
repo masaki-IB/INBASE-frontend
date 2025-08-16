@@ -3,12 +3,8 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
   reactStrictMode: true,
-  // 本番環境でのみ静的エクスポートを有効化
-  ...(isProd ? { 
-    output: 'export',
-    distDir: 'out',
-  } : {}),
-  
+  output: 'export',
+  distDir: 'out',
   images: {
     unoptimized: true,
     domains: ['images.unsplash.com'],
@@ -18,7 +14,7 @@ const nextConfig = {
   },
   env: {
     SITE_URL: isProd 
-      ? 'https://your-github-username.github.io/inbase-frontend' 
+      ? 'https://masaki-ib.github.io/inbase-frontend' 
       : 'http://localhost:3000',
     SITE_TITLE: 'INBASE — 開発中',
     SITE_DESCRIPTION: '開発中のサイトです',
