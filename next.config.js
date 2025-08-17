@@ -26,7 +26,10 @@ const nextConfig = {
   } : {}),
   // 開発サーバー用の設定
   experimental: {
-    serverActions: true,
+    serverActions: {
+      // Server Actions configuration
+      bodySizeLimit: '2mb',
+    },
   },
 };
 

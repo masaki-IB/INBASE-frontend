@@ -22,6 +22,7 @@ export default function Home() {
         const targetId = target.getAttribute('href')
         if (targetId === '#') return
         
+        if (!targetId) return; // targetIdがnullの場合は早期リターン
         const targetElement = document.querySelector(targetId)
         if (targetElement) {
           window.scrollTo({
@@ -32,8 +33,8 @@ export default function Home() {
       }
     }
 
-    document.addEventListener('click', handleAnchorClick)
-    return () => document.removeEventListener('click', handleAnchorClick)
+    document.addEventListener('click', handleAnchorClick as EventListener)
+    return () => document.removeEventListener('click', handleAnchorClick as EventListener)
   }, [])
 
   return (
