@@ -77,8 +77,9 @@ export default function Home() {
         const targetId = target.getAttribute('href')
         if (targetId === '#') return
         
-        if (!targetId) return; // targetIdがnullの場合は早期リターン
-        const targetElement = document.querySelector(targetId)
+        if (targetId === '#' || !targetId.startsWith('#')) return;
+        
+        const targetElement = document.getElementById(targetId.slice(1));
         if (targetElement) {
           window.scrollTo({
             top: targetElement.getBoundingClientRect().top + window.pageYOffset - 80,

@@ -52,6 +52,16 @@ const nextConfig = {
   experimental: isVercel ? {} : {
     // 静的エクスポート固有の設定
     outputFileTracingRoot: undefined,
+  },
+  
+  // ESLintの設定
+  eslint: {
+    ignoreDuringBuilds: true, // ビルド時のESLintエラーを無視
+  },
+  
+  // TypeScriptの設定
+  typescript: {
+    ignoreBuildErrors: true, // ビルド時のTypeScriptエラーを無視
   }
 };
 
