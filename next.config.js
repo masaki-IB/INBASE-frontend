@@ -7,8 +7,12 @@ const nextConfig = {
   distDir: 'out',
   trailingSlash: true,
   images: {
+    // 静的エクスポートでは画像最適化は無効化
     unoptimized: true,
+    // 外部画像ソースを指定
     domains: ['images.unsplash.com'],
+    // 画像のパスに basePath を含める
+    path: process.env.NODE_ENV === 'production' ? '/inbase-frontend/_next/image' : '/_next/image',
   },
   compiler: {
     styledComponents: true,
@@ -20,22 +24,14 @@ const nextConfig = {
     SITE_TITLE: 'INBASE — 開発中',
     SITE_DESCRIPTION: '開発中のサイトです',
   },
-  // 本番環境でのみベースパスを設定
-  ...(isProd ? {
-    basePath: '/inbase-frontend',
-    assetPrefix: '/inbase-frontend/',
-  } : {}),
+  // ベースパスとアセットプレフィックスの設定
+  basePath: isProd ? '/inbase-frontend' : '',
+  assetPrefix: isProd ? '/inbase-frontend/' : '',
   // 静的エクスポート用の設定
   experimental: {
-    serverActions: {
-      bodySizeLimit: '2mb',
-    },
-    // 静的エクスポートの互換性を向上
-    appDir: true,
-  },
-  // 静的エクスポート時に必要な設定
-  skipTrailingSlashRedirect: true,
-  skipMiddlewareUrlNormalize: true,
+    // 静的エクスポートでは serverActions は使用できません
+    // 必要に応じて、API ルートを使用してください
+  }
 };
 
 module.exports = nextConfig;

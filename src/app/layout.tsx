@@ -22,12 +22,12 @@ export const metadata: Metadata = {
   description: 'NFT・ARからプレミアムグッズまで、企画〜物流を一気通貫でサポートするブランディング特化型エージェンシー',
   keywords: ['INBASE', '販促', 'ブランディング', 'NFT', 'AR', 'プロモーション', 'グッズ制作'],
   authors: [{ name: 'INBASE' }],
-  metadataBase: new URL('https://in-base.jp'),
+  metadataBase: new URL(process.env.NODE_ENV === 'production' ? 'https://masaki-ib.github.io' : 'http://localhost:3000'),
   
   // PWA Configuration
   applicationName: 'INBASE',
   generator: 'Next.js',
-  manifest: '/manifest.json',
+  manifest: '/inbase-frontend/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -39,13 +39,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'INBASE — ワンストップ販促ソリューション',
     description: 'NFT・ARからプレミアムグッズまで、企画〜物流を一気通貫でサポートするブランディング特化型エージェンシー',
-    url: 'https://in-base.jp',
+    url: process.env.NODE_ENV === 'production' ? 'https://masaki-ib.github.io/inbase-frontend' : 'http://localhost:3000',
     siteName: 'INBASE',
     locale: 'ja_JP',
     type: 'website',
     images: [
       {
-        url: '/images/ogp.jpg',
+        url: '/inbase-frontend/images/ogp.jpg',
         width: 1200,
         height: 630,
         alt: 'INBASE — ワンストップ販促ソリューション',
