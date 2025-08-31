@@ -1,16 +1,19 @@
 /** @type {import('next').NextConfig} */
 const isProd = process.env.NODE_ENV === 'production';
-const basePath = isProd ? '/inbase-frontend' : '';
+const isVercel = process.env.VERCEL === '1';
+const basePath = isVercel ? '' : (isProd ? '/inbase-frontend' : '');
 
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export',
-  distDir: 'out',
+  // VercelではSSRを使用、GitHub Pagesでは静的エクスポート
+  output: isVercel ? undefined : 'export',
+  distDir: isVercel ? '.next' : 'out',
   trailingSlash: true,
   
-  // Enable static HTML export
+  // 画像最適化の設定
   images: {
-    unoptimized: true,
+    // Vercelでは最適化を有効に、GitHub Pagesでは無効化
+    unoptimized: !isVercel,
     domains: ['images.unsplash.com'],
   },
   
@@ -19,21 +22,23 @@ const nextConfig = {
   },
   
   env: {
-    SITE_URL: isProd 
-      ? 'https://masaki-ib.github.io/inbase-frontend' 
-      : 'http://localhost:3000',
+    SITE_URL: isVercel 
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || 'your-vercel-app.vercel.app'}`
+      : isProd 
+        ? 'https://masaki-ib.github.io/inbase-frontend' 
+        : 'http://localhost:3000',
     SITE_TITLE: 'INBASE — 開発中',
     SITE_DESCRIPTION: '開発中のサイトです',
   },
   
-  // Base path configuration
+  // ベースパスの設定
   basePath: basePath,
   assetPrefix: basePath ? `${basePath}/` : '',
   
-  // Disable server-side features for static export
+  // 静的エクスポート用の設定
   webpack: (config, { isServer }) => {
     if (!isServer) {
-      // Fixes npm packages that depend on `fs` module
+      // `fs`モジュールに依存するnpmパッケージの修正
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
@@ -41,6 +46,12 @@ const nextConfig = {
       };
     }
     return config;
+  },
+  
+  // Vercelで静的エクスポート時に必要な設定
+  experimental: isVercel ? {} : {
+    // 静的エクスポート固有の設定
+    outputFileTracingRoot: undefined,
   }
 };
 
