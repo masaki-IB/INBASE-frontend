@@ -34,7 +34,10 @@ jobs:
       - name: Build
         run: |
           npm run build
+          # Ensure .nojekyll is created to prevent GitHub Pages from processing Next.js files
           touch ./out/.nojekyll
+          # Create a 404.html for GitHub Pages
+          cp ./out/404/index.html ./out/404.html
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
