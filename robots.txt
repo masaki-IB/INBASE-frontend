@@ -1,6 +1,9 @@
-# Allow all crawlers to index the site
+# *
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://in-base.jp/sitemap.xml
+# Host
+Host: https://masaki-ib.github.io/inbase-frontend
+
+# Sitemaps
+Sitemap: https://masaki-ib.github.io/inbase-frontend/sitemap.xml
