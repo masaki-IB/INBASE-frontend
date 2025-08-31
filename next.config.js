@@ -5,6 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'export',
   distDir: 'out',
+  trailingSlash: true,
   images: {
     unoptimized: true,
     domains: ['images.unsplash.com'],
@@ -24,13 +25,17 @@ const nextConfig = {
     basePath: '/inbase-frontend',
     assetPrefix: '/inbase-frontend/',
   } : {}),
-  // 開発サーバー用の設定
+  // 静的エクスポート用の設定
   experimental: {
     serverActions: {
-      // Server Actions configuration
       bodySizeLimit: '2mb',
     },
+    // 静的エクスポートの互換性を向上
+    appDir: true,
   },
+  // 静的エクスポート時に必要な設定
+  skipTrailingSlashRedirect: true,
+  skipMiddlewareUrlNormalize: true,
 };
 
 module.exports = nextConfig;
