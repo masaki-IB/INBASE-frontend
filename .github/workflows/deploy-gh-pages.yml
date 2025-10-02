@@ -27,9 +27,9 @@ jobs:
       
       - name: Build and export
         run: |
+          echo "NEXT_PUBLIC_BASE_PATH=/inbase-frontend" >> .env.production
           npm run build
           touch out/.nojekyll
-          echo "inbase-frontend.vercel.app" > out/CNAME
       
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

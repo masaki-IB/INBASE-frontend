@@ -1,13 +1,15 @@
 /** @type {import('next').NextConfig} */
 const isProd = process.env.NODE_ENV === 'production';
 const isVercel = process.env.VERCEL === '1';
-const basePath = isVercel ? '' : (isProd ? '/inbase-frontend' : '');
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || (isVercel ? '' : (isProd ? '/inbase-frontend' : ''));
 
 const nextConfig = {
   reactStrictMode: true,
   // VercelではSSRを使用、GitHub Pagesでは静的エクスポート
   output: isVercel ? undefined : 'export',
   distDir: isVercel ? '.next' : 'out',
+  basePath: basePath,
+  assetPrefix: basePath,
   trailingSlash: true,
   
   // 画像最適化の設定
